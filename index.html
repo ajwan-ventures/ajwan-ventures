@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJWAN Ventures | Premium Food, Spices & Flours</title>
+    <meta name="description" content="AJWAN VENTURES PRIVATE LIMITED provides premium spice powders, traditional puttu powder, high-quality flours, and food ingredients.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header id="main-header">
+        <div class="nav-container">
+            <a href="#" class="logo" id="logo-link" style="display: flex; align-items: center;">
+                <img src="assets/logo.jpg" alt="AJWAN Logo" style="height: 50px; object-fit: contain;">
+            </a>
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link">Home</a></li>
+                <li><a href="#catalog" class="nav-link">Products</a></li>
+                <li><a href="#about" class="nav-link">About Us</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button id="login-nav-btn" class="btn btn-secondary">Admin Login</button>
+                <button id="logout-nav-btn" class="btn btn-danger" style="display: none;">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero-section">
+        <div class="hero-background"></div>
+        <div class="hero-content">
+            <span class="hero-tagline">Ajwan Ventures Private Limited</span>
+            <h1>Pure Spices & <span>Traditional Flours</span></h1>
+            <p class="hero-desc">Bringing you the authentic taste of pure spice powders, double-roasted flours, and quality breakfast ingredients made from natural sources.</p>
+            <a href="#catalog" class="btn btn-primary btn-lg">View Products</a>
+        </div>
+    </section>
+
+    <!-- Products Catalog Section -->
+    <section class="products-section" id="catalog">
+        
+        <!-- Admin Management Panel (Visible only when logged in) -->
+        <div id="admin-panel" class="admin-bar" style="display: none;">
+            <div class="admin-info">
+                <span class="admin-badge">Admin Mode</span>
+                <p>Welcome! You can now manage your catalog.</p>
+            </div>
+            <div style="display: flex; gap: 0.75rem;">
+                <button id="add-category-btn" class="btn btn-secondary">+ Add Category</button>
+                <button id="add-product-btn" class="btn btn-admin">+ Add Product</button>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <div class="section-title">
+                <h2>Our Products</h2>
+                <p>Pick your favorite flavor, category, or snack type</p>
+            </div>
+            <div class="filters-container" id="filters-container">
+                <button class="filter-btn active" data-category="all">All Snacks</button>
+                <!-- Dynamic categories will be dynamically appended here by app.js -->
+            </div>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="products-grid" id="products-grid">
+            <!-- Dynamic products will be injected here by app.js -->
+        </div>
+    </section>
+
+    <!-- About Section (Footer content helper) -->
+    <section id="about" style="max-width: 800px; margin: 0 auto; padding: 2rem 2rem 6rem; text-align: center; color: var(--text-secondary);">
+        <h3 style="font-size: 2rem; margin-bottom: 1rem; color: var(--text-primary);">About AJWAN VENTURES</h3>
+        <p>AJWAN VENTURES PRIVATE LIMITED is committed to bringing you the highest standard of kitchen ingredients. From our traditional double-roasted puttu powder to our hot Kashmiri chilly powder, we focus on preserving natural flavors and nutritional value without any artificial colors or additives.</p>
+    </section>
+
+    <!-- Footer -->
+    <footer id="main-footer">
+        <div class="footer-content">
+            <div class="logo footer-logo" style="display: flex; align-items: center; justify-content: center;">
+                <img src="assets/logo.jpg" alt="AJWAN Logo" style="height: 45px; object-fit: contain;">
+            </div>
+            <p>Premium spice powders, breakfast flours, and food products. Registered brand of AJWAN VENTURES PRIVATE LIMITED.</p>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+                <a href="#" class="footer-link">Contact</a>
+            </div>
+            <p style="font-size: 0.8rem; margin-top: 1rem;">&copy; 2026 AJWAN VENTURES PRIVATE LIMITED. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Admin Login Dialog Modal -->
+    <dialog id="login-dialog">
+        <div class="dialog-container">
+            <div class="dialog-header">
+                <h3>Admin Sign In</h3>
+                <button class="dialog-close" id="close-login-btn">&times;</button>
+            </div>
+            <form id="login-form" method="dialog">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" class="form-control" placeholder="e.g. admin" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-control" placeholder="••••••••" required autocomplete="current-password">
+                    <span id="login-error-msg" class="form-error">Incorrect username or password.</span>
+                </div>
+                <div class="dialog-actions">
+                    <button type="button" class="btn btn-secondary" id="cancel-login-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="submit-login-btn">Sign In</button>
+                </div>
+            </form>
+        </div>
+    </dialog>
+
+    <!-- Add Product Dialog Modal -->
+    <dialog id="add-product-dialog">
+        <div class="dialog-container">
+            <div class="dialog-header">
+                <h3>Add New Product</h3>
+                <button class="dialog-close" id="close-add-product-btn">&times;</button>
+            </div>
+            <form id="add-product-form" method="dialog">
+                <div class="form-group">
+                    <label for="prod-title">Product Name</label>
+                    <input type="text" id="prod-title" class="form-control" placeholder="e.g. Jalapeno Cheese Poppers" required>
+                </div>
+                <div class="form-group">
+                    <label for="prod-category">Category</label>
+                    <select id="prod-category" class="form-control" required>
+                        <option value="" disabled selected>Select category...</option>
+                        <!-- Options will be populated dynamically from localStorage categories -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="prod-desc">Description</label>
+                    <textarea id="prod-desc" class="form-control" placeholder="Describe the flavor, ingredients, and experience..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Product Image</label>
+                    <div class="file-upload-wrapper" id="upload-wrapper">
+                        <span class="file-upload-icon">📁</span>
+                        <div class="file-upload-text" id="upload-text">Click or drag image file here</div>
+                        <input type="file" id="prod-image-file" accept="image/*" required>
+                    </div>
+                    <img id="img-preview" class="file-upload-preview" alt="Preview">
+                    <span id="file-error-msg" class="form-error">Please select a valid image file.</span>
+                </div>
+                <div class="dialog-actions">
+                    <button type="button" class="btn btn-secondary" id="cancel-add-product-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="submit-add-product-btn">Create Product</button>
+                </div>
+            </form>
+        </div>
+    </dialog>
+
+    <!-- Add Category Dialog Modal -->
+    <dialog id="add-category-dialog">
+        <div class="dialog-container">
+            <div class="dialog-header">
+                <h3>Add New Category</h3>
+                <button class="dialog-close" id="close-add-category-btn">&times;</button>
+            </div>
+            <form id="add-category-form" method="dialog">
+                <div class="form-group">
+                    <label for="cat-name">Category Name</label>
+                    <input type="text" id="cat-name" class="form-control" placeholder="e.g. Cookies, Candy, Nuts" required>
+                    <span id="cat-error-msg" class="form-error">Category already exists.</span>
+                </div>
+                <div class="dialog-actions">
+                    <button type="button" class="btn btn-secondary" id="cancel-add-category-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="submit-add-category-btn">Create Category</button>
+                </div>
+            </form>
+        </div>
+    </dialog>
+
+    <!-- Toast Notification Popup -->
+    <div id="toast" class="toast" role="alert">
+        <span id="toast-message">Operation successful!</span>
+    </div>
+
+    <!-- Application Script -->
+    <script src="app.js"></script>
+</body>
+</html>
