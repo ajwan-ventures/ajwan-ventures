@@ -235,6 +235,62 @@ document.addEventListener("DOMContentLoaded", () => {
     updateAuthStateUI();
     renderCategoriesUI();
     renderCatalog();
+
+    // 1. Dynamic Floating Leaves around the Mascot
+    const mascotWrapper = document.querySelector(".mascot-wrapper");
+    if (mascotWrapper) {
+        const leafEmojis = ["🍃", "🌱", "🌿"];
+        for (let i = 0; i < 8; i++) {
+            const leaf = document.createElement("div");
+            leaf.className = "floating-leaf";
+            leaf.textContent = leafEmojis[Math.floor(Math.random() * leafEmojis.length)];
+            
+            // Random initial placement & sizes
+            leaf.style.left = `${Math.random() * 80 + 10}%`;
+            leaf.style.top = `${Math.random() * 80 + 10}%`;
+            leaf.style.fontSize = `${Math.random() * 0.8 + 0.8}rem`;
+            leaf.style.animationDelay = `${Math.random() * 6}s`;
+            leaf.style.animationDuration = `${Math.random() * 8 + 6}s`;
+            
+            mascotWrapper.appendChild(leaf);
+        }
+    }
+
+    // 2. Interactive Mascot Mouse 3D Tilt Parallax
+    const heroSection = document.getElementById("hero-section");
+    const mascotImg = document.querySelector(".mascot-img");
+    const mascotGlow = document.querySelector(".mascot-glow");
+
+    if (heroSection && mascotImg) {
+        heroSection.addEventListener("mousemove", (e) => {
+            const rect = heroSection.getBoundingClientRect();
+            // Calculate mouse position relative to center of the hero section
+            const x = e.clientX - rect.left - (rect.width / 2);
+            const y = e.clientY - rect.top - (rect.height / 2);
+            
+            // Calculate tilt: max 12 degrees
+            const tiltX = (y / (rect.height / 2)) * -12;
+            const tiltY = (x / (rect.width / 2)) * 12;
+            
+            mascotImg.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateY(-8px) scale(1.02)`;
+            mascotImg.style.boxShadow = "0 20px 45px rgba(21, 62, 37, 0.15), 0 0 35px rgba(22, 163, 74, 0.25)";
+            
+            if (mascotGlow) {
+                // Move glow background slightly in opposite direction for parallax
+                mascotGlow.style.transform = `translate(${x * -0.04}px, ${y * -0.04}px) scale(1.05)`;
+            }
+        });
+        
+        heroSection.addEventListener("mouseleave", () => {
+            // Smoothly snap back to origin
+            mascotImg.style.transform = "rotateX(0deg) rotateY(0deg) translateY(0px) scale(1)";
+            mascotImg.style.boxShadow = "0 15px 35px rgba(21, 62, 37, 0.1), 0 0 30px rgba(22, 163, 74, 0.1)";
+            
+            if (mascotGlow) {
+                mascotGlow.style.transform = "translate(0px, 0px) scale(1)";
+            }
+        });
+    }
     
     // Setup dialog backdrop auto-close
     const dialogs = document.querySelectorAll("dialog");

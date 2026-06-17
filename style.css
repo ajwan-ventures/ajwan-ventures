@@ -299,6 +299,7 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+    perspective: 1000px; /* Enable 3D space for tilt parallax */
 }
 
 .mascot-glow {
@@ -319,7 +320,15 @@ header {
     z-index: 2;
     border-radius: var(--radius-lg);
     box-shadow: 0 15px 35px rgba(21, 62, 37, 0.1), 0 0 30px rgba(22, 163, 74, 0.1);
+    /* Float animation active when mouse is not active */
     animation: mascot-float 6s ease-in-out infinite;
+    transition: transform 0.15s ease-out, box-shadow 0.3s ease;
+    transform-style: preserve-3d;
+}
+
+.hero:hover .mascot-img {
+    /* Pause standard float animation when mouse enters hero so parallax takes over */
+    animation-play-state: paused;
 }
 
 @keyframes mascot-float {
@@ -331,6 +340,33 @@ header {
 @keyframes mascot-pulse {
     0% { transform: scale(0.95); opacity: 0.8; }
     100% { transform: scale(1.05); opacity: 1; }
+}
+
+/* Floating Leaves Styling */
+.floating-leaf {
+    position: absolute;
+    z-index: 3;
+    pointer-events: none;
+    opacity: 0;
+    animation: float-leaf-anim 10s linear infinite;
+    user-select: none;
+}
+
+@keyframes float-leaf-anim {
+    0% {
+        transform: translateY(40px) translateX(0px) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.6;
+    }
+    90% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(-100px) translateX(25px) rotate(360deg);
+        opacity: 0;
+    }
 }
 
 /* Products Section */
