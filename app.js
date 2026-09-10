@@ -2,31 +2,43 @@
 const DEFAULT_PRODUCTS = [
     {
         id: "1",
-        title: "Kashmiri Chilly Powder",
-        category: "Spices",
-        desc: "Made from premium grade sun-dried Kashmiri chillies. Delivers a vibrant red color and a mild, rich warmth to your dishes.",
-        image: "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=600&q=80",
-        themeRgb: "239, 68, 68" // Red
+        title: "Ajwan White Steam Puttu Podi (1kg)",
+        category: "Breakfast Flours",
+        brand: "Ajwan",
+        desc: "Authentic double-roasted steam puttu podi crafted from select white rice. Ensures soft, fragrant, fluffy traditional Malabar puttu.",
+        image: "assets/mascot.jpg",
+        themeRgb: "22, 163, 74" // Green
     },
     {
         id: "2",
-        title: "Double Roasted Puttu Powder",
-        category: "Breakfast Powders",
-        desc: "Crafted from select high-quality white rice, steam-treated and double-roasted for soft, fluffy, traditional Malabar puttu.",
-        image: "https://images.unsplash.com/photo-1586444248902-2f64eddc13df?auto=format&fit=crop&w=600&q=80",
-        themeRgb: "245, 158, 11" // Gold
+        title: "Spice Boy Cut Mango Pickle",
+        category: "Pickles & Spices",
+        brand: "Spice Boy",
+        desc: "Traditional Kerala style cut mango pickle made with raw mangoes, authentic spice blend, and pure ginger-garlic oil seasoning.",
+        image: "assets/mango_pickle.jpg",
+        themeRgb: "180, 83, 9" // Amber/Brown
     },
     {
         id: "3",
-        title: "Pure Turmeric Powder",
-        category: "Spices",
-        desc: "High-curcumin turmeric roots, finely ground. Gives your curries a warm earthy aroma and a rich golden hue.",
-        image: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=600&q=80",
+        title: "Kashmiri Chilly Powder",
+        category: "Pickles & Spices",
+        brand: "Spice Boy",
+        desc: "Made from premium grade sun-dried Kashmiri chillies. Delivers a vibrant natural red color and a mild, rich warmth to your curries.",
+        image: "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=600&q=80",
+        themeRgb: "220, 38, 38" // Red
+    },
+    {
+        id: "4",
+        title: "Snack Boy Crunchy Snacks",
+        category: "Snacks",
+        brand: "Snack Boy",
+        desc: "Crispy, crunchy savory potato and grain snack. The ultimate mouth-watering bite for tea-time and anytime cravings.",
+        image: "assets/snack_boy_logo.jpg",
         themeRgb: "234, 179, 8" // Yellow
     }
 ];
 
-const DEFAULT_CATEGORIES = ["Spices", "Breakfast Powders", "Grain Flours", "Other"];
+const DEFAULT_CATEGORIES = ["Breakfast Flours", "Pickles & Spices", "Snacks"];
 
 // Initialize catalog products storage
 function getProducts() {
@@ -225,8 +237,8 @@ function deleteProduct(id) {
 
 // App Initialization
 document.addEventListener("DOMContentLoaded", () => {
-    // Clear old localStorage if it contains old demo data (to force initialization of new branded spices data)
-    if (localStorage.getItem("products") && JSON.parse(localStorage.getItem("products"))[0]?.title.includes("Golden Crisp")) {
+    // Clear old localStorage if it contains old demo data (to force initialization of new branded assets)
+    if (localStorage.getItem("products") && !JSON.parse(localStorage.getItem("products"))[0]?.title.includes("Ajwan White Steam")) {
         localStorage.removeItem("products");
         localStorage.removeItem("categories");
     }
