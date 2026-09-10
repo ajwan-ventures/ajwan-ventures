@@ -5,40 +5,14 @@ const DEFAULT_PRODUCTS = [
         title: "Ajwan White Steam Puttu Podi (1kg)",
         category: "Breakfast Flours",
         brand: "Ajwan",
-        desc: "Authentic double-roasted steam puttu podi crafted from select white rice. Ensures soft, fragrant, fluffy traditional Malabar puttu.",
-        image: "assets/mascot.jpg",
+        desc: "Authentic double-roasted steam puttu podi crafted from select white rice. Steam-treated for soft, fragrant, fluffy traditional Malabar puttu.",
+        image: "assets/puttu_podi_packet.jpg",
+        avatarImage: "assets/puttu_mascot_avatar.jpg",
         themeRgb: "22, 163, 74" // Green
-    },
-    {
-        id: "2",
-        title: "Spice Boy Cut Mango Pickle",
-        category: "Pickles & Spices",
-        brand: "Spice Boy",
-        desc: "Traditional Kerala style cut mango pickle made with raw mangoes, authentic spice blend, and pure ginger-garlic oil seasoning.",
-        image: "assets/mango_pickle.jpg",
-        themeRgb: "180, 83, 9" // Amber/Brown
-    },
-    {
-        id: "3",
-        title: "Kashmiri Chilly Powder",
-        category: "Pickles & Spices",
-        brand: "Spice Boy",
-        desc: "Made from premium grade sun-dried Kashmiri chillies. Delivers a vibrant natural red color and a mild, rich warmth to your curries.",
-        image: "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=600&q=80",
-        themeRgb: "220, 38, 38" // Red
-    },
-    {
-        id: "4",
-        title: "Snack Boy Crunchy Snacks",
-        category: "Snacks",
-        brand: "Snack Boy",
-        desc: "Crispy, crunchy savory potato and grain snack. The ultimate mouth-watering bite for tea-time and anytime cravings.",
-        image: "assets/snack_boy_logo.jpg",
-        themeRgb: "234, 179, 8" // Yellow
     }
 ];
 
-const DEFAULT_CATEGORIES = ["Breakfast Flours", "Pickles & Spices", "Snacks"];
+const DEFAULT_CATEGORIES = ["Breakfast Flours"];
 
 // Initialize catalog products storage
 function getProducts() {
@@ -139,26 +113,7 @@ function renderCategoriesUI() {
 
 // Map categories to dynamic theme RGB colors
 function getThemeRgbForCategory(category) {
-    if (category === "Spices") return "239, 68, 68"; // Red
-    if (category === "Breakfast Powders") return "245, 158, 11"; // Gold
-    if (category === "Grain Flours") return "20, 184, 166"; // Teal
-    if (category === "Other") return "249, 115, 22"; // Orange
-    
-    // Compute simple deterministic hash for custom category colors
-    let hash = 0;
-    for (let i = 0; i < category.length; i++) {
-        hash = category.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    const colors = [
-        "249, 115, 22",  // Orange
-        "168, 85, 247",  // Purple
-        "59, 130, 246",  // Blue
-        "236, 72, 153",  // Pink
-        "20, 184, 166",  // Teal
-        "234, 179, 8",    // Yellow
-        "14, 165, 233"   // Sky blue
-    ];
-    return colors[Math.abs(hash) % colors.length];
+    return "22, 163, 74"; // Green accent
 }
 
 // Render Products Grid
@@ -184,30 +139,44 @@ function renderCatalog(categoryFilter = "all") {
     }
     
     filtered.forEach(product => {
-        const card = document.createElement("div");
-        card.className = "product-card";
-        card.style.setProperty("--card-theme-rgb", product.themeRgb || "249, 115, 22");
+        const container = document.createElement("div");
+        container.className = "product-card-container";
         
-        card.innerHTML = `
-            <div class="product-img-wrapper">
-                <div class="product-img-bg"></div>
-                <img src="${product.image}" class="product-img" alt="${product.title}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1566478989037-eec170784d0b?auto=format&fit=crop&w=300&q=80'">
-            </div>
-            <div class="product-details">
-                <span class="product-category">${product.category}</span>
-                <h3 class="product-title">${product.title}</h3>
-                <p class="product-desc">${product.desc}</p>
-                <div class="product-footer">
-                    <span class="product-price">Premium Quality</span>
+        container.innerHTML = `
+            <div class="product-card" style="--card-theme-rgb: ${product.themeRgb || '22, 163, 74'}">
+                <div class="product-img-wrapper">
+                    <div class="product-img-bg"></div>
+                    <img src="${product.image}" class="product-img" alt="${product.title}" loading="lazy">
                 </div>
-                ${isLoggedIn ? `
-                    <div class="admin-card-actions">
-                        <button class="btn btn-danger btn-sm delete-product-btn" data-id="${product.id}">Delete</button>
+                <div class="product-details">
+                    <span class="product-category">${product.category}</span>
+                    <h3 class="product-title">${product.title}</h3>
+                    <p class="product-desc">${product.desc}</p>
+                    <div class="product-badges">
+                        <span class="badge">🌾 100% Pure Rice</span>
+                        <span class="badge">🔥 Double Roasted</span>
+                        <span class="badge">✨ Steam Treated</span>
                     </div>
-                ` : ""}
+                    <div class="product-footer">
+                        <span class="product-price">Net Weight: 1kg</span>
+                    </div>
+                    ${isLoggedIn ? `
+                        <div class="admin-card-actions">
+                            <button class="btn btn-danger btn-sm delete-product-btn" data-id="${product.id}">Delete</button>
+                        </div>
+                    ` : ""}
+                </div>
+            </div>
+            
+            <div class="product-avatar-wrapper">
+                <div class="speech-bubble">
+                    <span>Try our soft & fluffy Malabar Puttu! 👍</span>
+                </div>
+                <div class="avatar-glow"></div>
+                <img src="${product.avatarImage || 'assets/puttu_mascot_avatar.jpg'}" class="animated-avatar-img" alt="Ajwan Hero Mascot">
             </div>
         `;
-        grid.appendChild(card);
+        grid.appendChild(container);
     });
     
     // Add delete event listeners
@@ -237,10 +206,13 @@ function deleteProduct(id) {
 
 // App Initialization
 document.addEventListener("DOMContentLoaded", () => {
-    // Clear old localStorage if it contains old demo data (to force initialization of new branded assets)
-    if (localStorage.getItem("products") && !JSON.parse(localStorage.getItem("products"))[0]?.title.includes("Ajwan White Steam")) {
-        localStorage.removeItem("products");
-        localStorage.removeItem("categories");
+    // Force reset localStorage if old products exist
+    if (localStorage.getItem("products")) {
+        const prods = JSON.parse(localStorage.getItem("products"));
+        if (prods.length > 1 || !prods[0]?.title.includes("Puttu Podi")) {
+            localStorage.removeItem("products");
+            localStorage.removeItem("categories");
+        }
     }
 
     // Initial Setup
